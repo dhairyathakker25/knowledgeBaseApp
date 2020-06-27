@@ -1,0 +1,15 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: knowledgebaseservice
+spec:
+  selector:
+    app: knowledgebaseapp
+  ports:
+    - protocol: "TCP"
+      # Port accessible inside cluster
+      port: 8081
+      # Port accessible outside cluster
+      nodePort: 30001
+  type: NodePort
+

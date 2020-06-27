@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: knowledgebasedeployment
+spec:
+  selector:
+    matchLabels:
+      app: knowledgebaseapp
+  template:
+    metadata:
+      labels:
+        app: knowledgebaseapp
+    spec:
+      containers:
+        - name: knowledgebaseapp
+          image: dhairya25/knowledgebasedemo:latest
+          imagePullPolicy: Always
+          ports:
+          - containerPort: 8081
