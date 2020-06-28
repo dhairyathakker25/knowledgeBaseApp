@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @SpringBootApplication
-@ComponentScan(basePackages={"com.topics.knowledgeBase.*"})
+@ComponentScan(basePackages={"com.topics.knowledgeBase"})
 @EnableAutoConfiguration(exclude={DataSourceAutoConfiguration.class})
 public class KnowledgeBaseApplication {
 
