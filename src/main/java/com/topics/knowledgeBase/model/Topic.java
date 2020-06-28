@@ -12,7 +12,7 @@ import lombok.experimental.Accessors;
 @Builder
 public class Topic {
 
-    private String topicId;
+    private long topicId;
     private String topicName;
     private String topicDescription;
 }
