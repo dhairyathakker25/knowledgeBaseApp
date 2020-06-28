@@ -9,7 +9,7 @@ import lombok.experimental.Accessors;
 @Data
 @Getter
 @Setter
-@Accessors(chain = true)
+@Builder
 public class Topic {
 
     private String topicId;

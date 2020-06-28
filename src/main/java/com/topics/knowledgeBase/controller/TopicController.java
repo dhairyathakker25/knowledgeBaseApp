@@ -15,8 +15,8 @@ public class TopicController {
     public List<Topic> getAllTopics() {
         //hard coded topics
         return Arrays.asList(
-                new Topic().setTopicId("topicId1").setTopicName("TopicName1").setTopicDescription("TopicDescription1"),
-                new Topic().setTopicId("topicId2").setTopicName("TopicName2").setTopicDescription("TopicDescription2")
+                Topic.builder().topicId("topicId1").topicName("TopicName1").topicDescription("TopicDescription1").build(),
+                Topic.builder().topicId("topicId2").topicName("TopicName2").topicDescription("TopicDescription2").build()
         );
     }
 }

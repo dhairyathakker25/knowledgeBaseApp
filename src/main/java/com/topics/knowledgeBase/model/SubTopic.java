@@ -10,7 +10,7 @@ import lombok.experimental.Accessors;
 @Data
 @Getter
 @Setter
-@Accessors(chain = true)
+@Builder
 public class SubTopic {
 
     private String topicId;
