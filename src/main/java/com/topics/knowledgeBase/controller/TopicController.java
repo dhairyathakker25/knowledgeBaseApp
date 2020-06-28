@@ -23,8 +23,11 @@ public class TopicController {
     }
 
     @GetMapping(value = "/topics/{topicId}")
-    public ResponseEntity<Topic> getTopic(@PathVariable("topicId") long id) {
-        return new ResponseEntity<Topic>(topicService.getTopic(id), HttpStatus.OK);
+    public ResponseEntity<Object> getTopic(@PathVariable("topicId") long id) {
+        if(topicService.getTopic(id).isPresent())
+            return new ResponseEntity<Object>(topicService.getTopic(id).get(), HttpStatus.OK);
+        else
+            return new ResponseEntity<Object>("topic id does not exist", HttpStatus.NOT_FOUND);
     }
 
     @PostMapping(value = "/topic")

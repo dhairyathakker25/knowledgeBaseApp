@@ -21,10 +21,9 @@ public class TopicService {
         return topics;
     }
 
-    public Topic getTopic(long topicId) {
+    public Optional<Topic> getTopic(long topicId) {
         return topics.stream().filter(t -> t.getTopicId() == topicId)
-                .findFirst()
-                .orElse(Topic.builder().topicDescription(null).topicId(0).topicName(null).build());
+                .findFirst();
     }
 
     public boolean addTopic(Topic topic) {
