@@ -11,7 +11,7 @@ import java.util.List;
 @RestController
 public class TopicController {
 
-    @GetMapping(value = "/topiclist")
+    @GetMapping(value = "/topics")
     public List<Topic> getAllTopics() {
         //hard coded topics
         return Arrays.asList(
