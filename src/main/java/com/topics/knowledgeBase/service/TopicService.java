@@ -1,6 +1,6 @@
 package com.topics.knowledgeBase.service;
 
-import com.topics.knowledgeBase.model.Topic;
+import com.topics.knowledgeBase.entities.Topic;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;

@@ -1,10 +1,9 @@
-package com.topics.knowledgeBase.model;
+package com.topics.knowledgeBase.entities;
 
 import lombok.Builder;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.experimental.Accessors;
 
 
 @Data
