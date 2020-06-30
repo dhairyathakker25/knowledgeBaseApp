@@ -21,7 +21,10 @@ public class TopicService {
     }
 
     public Topic getTopic(Long topicId) {
-        return topicRepository.findById(topicId).get();
+        if(topicRepository.findById(topicId).isPresent())
+            return topicRepository.findById(topicId).get();
+        else
+            return null;
     }
 
     public Topic addTopic(Topic topic) {
@@ -40,7 +43,8 @@ public class TopicService {
     }
 
     public void deleteTopic(Long topicId) {
-         topicRepository.deleteById(topicId);
+        if(topicRepository.findById(topicId).isPresent())
+            topicRepository.deleteById(topicId);
     }
 
 }
