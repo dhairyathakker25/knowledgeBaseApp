@@ -47,4 +47,12 @@ public class TopicService {
             topicRepository.deleteById(topicId);
     }
 
+    public Topic getTopicByTopicName(String topicName) {
+        return topicRepository.findOneByTopicName(topicName);
+    }
+
+    public List<Topic> getTopicByTopicDescription(String topicDescription) {
+        return topicRepository.findAllByTopicDescription(topicDescription);
+    }
+
 }

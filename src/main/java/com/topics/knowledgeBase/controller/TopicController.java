@@ -45,5 +45,15 @@ public class TopicController {
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 
+    @GetMapping(value = "/topics/byTopicName/{topicName}")
+    public ResponseEntity<Object> getTopic(@PathVariable("topicName") String topicName) {
+        return new ResponseEntity<Object>(topicService.getTopicByTopicName(topicName), HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/topics/byTopicDescription/{topicDescription}")
+    public ResponseEntity<Object> getTopics(@PathVariable("topicDescription") String topicDescription) {
+        return new ResponseEntity<Object>(topicService.getTopicByTopicDescription(topicDescription), HttpStatus.OK);
+    }
+
 
 }
