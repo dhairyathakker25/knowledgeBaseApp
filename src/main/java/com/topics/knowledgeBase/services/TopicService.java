@@ -1,10 +1,10 @@
 package com.topics.knowledgeBase.services;
 
 import com.topics.knowledgeBase.entities.Topic;
+import com.topics.knowledgeBase.exceptions.TopicNameNotFoundException;
 import com.topics.knowledgeBase.exceptions.TopicNameNotUniqueException;
-import com.topics.knowledgeBase.exceptions.TopicNotFoundException;
+import com.topics.knowledgeBase.exceptions.TopicIdNotFoundException;
 import com.topics.knowledgeBase.repositories.TopicRepository;
-import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
@@ -22,25 +22,25 @@ public class TopicService {
         return topicRepository.findAll();
     }
 
-    public Optional<Topic> getTopic(Long topicId) throws TopicNotFoundException {
+    public Optional<Topic> getTopic(Long topicId) throws TopicIdNotFoundException {
 
         Optional<Topic> topic = topicRepository.findById(topicId);
 
         if(topic.isPresent())
             return topic;
         else
-            throw new TopicNotFoundException("Topic not found", topicId);
+            throw new TopicIdNotFoundException("Topic Id not found", topicId);
     }
 
     public Optional<Topic> addTopic(Topic topic) throws TopicNameNotUniqueException {
         if(topicRepository.findOneByTopicName(topic.getTopicName()) == null)
             return Optional.of(topicRepository.saveAndFlush(topic));
         else
-            throw new TopicNameNotUniqueException("Topic name exists: %s", topic.getTopicName());
+            throw new TopicNameNotUniqueException("Topic name exists", topic.getTopicName());
 
     }
 
-    public Optional<Topic> updateTopic(Long topicId, Topic updateTopic) throws TopicNotFoundException, TopicNameNotUniqueException {
+    public Optional<Topic> updateTopic(Long topicId, Topic updateTopic)  {
         Optional<Topic> topic = topicRepository.findById(topicId);
 
         if(topic.isPresent()) {
@@ -49,25 +49,29 @@ public class TopicService {
                 topic.get().setTopicDescription(updateTopic.getTopicDescription());
                 return Optional.of(topicRepository.saveAndFlush(topic.get()));
             } catch(DataIntegrityViolationException e) {
-                throw new TopicNameNotUniqueException("Topic name exists: %s", updateTopic.getTopicName());
+                throw new TopicNameNotUniqueException("Topic name exists", updateTopic.getTopicName());
             }
 
         } else
-            throw new TopicNotFoundException("Topic not found for update: %s", topicId);
+            throw new TopicIdNotFoundException("Topic Id not found for update", topicId);
 
 
     }
 
-    public void deleteTopic(Long topicId) throws TopicNotFoundException {
+    public void deleteTopic(Long topicId) {
         if(topicRepository.findById(topicId).isPresent())
             topicRepository.deleteById(topicId);
         else
-            throw new TopicNotFoundException("Topic not found for delete: %s", topicId);
-
+            throw new TopicIdNotFoundException("Topic Id not found for delete", topicId);
     }
 
     public Topic getTopicByTopicName(String topicName) {
-        return topicRepository.findOneByTopicName(topicName);
+
+        Optional<Topic> topic = topicRepository.findOneByTopicName(topicName);
+        if(topic.isPresent())
+            return topic.get();
+        else
+            throw new TopicNameNotFoundException("Topic name does not exist", topicName);
     }
 
     public List<Topic> getTopicByTopicDescription(String topicDescription) {

@@ -7,6 +7,8 @@ import lombok.Setter;
 import lombok.experimental.Tolerate;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 
 @Data
@@ -19,6 +21,9 @@ public class Topic {
     @GeneratedValue(strategy=GenerationType.AUTO)
     private Long topicId;
 
+    @NotEmpty(message = "Topic Name cannot be empty")
+    @Size(min=2, message = "Size must be atleast 2 characters")
+    @Size(max=20, message = "Size cannot be more than 20 characters")
     @Column(name = "topic_name", length = 20, nullable = false, unique = true)
     private String topicName;
 

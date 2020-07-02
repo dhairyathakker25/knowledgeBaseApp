@@ -4,14 +4,14 @@ import lombok.Getter;
 import static java.lang.String.format;
 
 @Getter
-public class TopicNotFoundException extends Exception {
+public class TopicIdNotFoundException extends RuntimeException {
 
 
     private static final long serialVersionUID = 5046409931672439867L;
     private Long topicId;
 
-    public TopicNotFoundException(String message, Long topicId) {
-        super(format(message, topicId));
+    public TopicIdNotFoundException(String message, Long topicId) {
+        super(message);
         this.topicId = topicId;
     }
 }

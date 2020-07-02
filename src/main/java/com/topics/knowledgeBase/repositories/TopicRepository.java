@@ -13,6 +13,6 @@ import java.util.Optional;
 
 @Repository
 public interface TopicRepository extends JpaRepository<Topic, Long> {
-    Topic findOneByTopicName(String topicName);
+    Optional<Topic> findOneByTopicName(String topicName);
     List<Topic> findAllByTopicDescription(String topicDescription);
 }
