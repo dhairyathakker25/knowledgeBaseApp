@@ -1,5 +1,9 @@
 package com.topics.knowledgeBase.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Builder;
 import lombok.Data;
 import lombok.Getter;
@@ -9,7 +13,8 @@ import lombok.experimental.Tolerate;
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
-import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @Builder
@@ -29,6 +34,10 @@ public class Topic {
 
     @Column(name = "topic_description", length = 50, nullable = false)
     private String topicDescription;
+
+    @OneToMany(mappedBy = "topic", cascade = CascadeType.ALL)
+    @JsonManagedReference
+    private List<SubTopic> subTopics = new ArrayList<SubTopic>();
 
     @Tolerate
     public Topic() {

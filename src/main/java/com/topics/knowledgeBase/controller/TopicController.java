@@ -21,25 +21,25 @@ import java.util.Optional;
 
 @RestController
 @Validated
+@RequestMapping(value = "/topics")
 public class TopicController {
 
     @Autowired
     TopicService topicService;
 
-    @GetMapping(value = "/topics", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
     public List<Topic> getAllTopics() {
         return topicService.getAllTopics();
     }
 
-    @GetMapping(value = "/topics/{topicId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/{topicId}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
     public Topic getTopic(@PathVariable("topicId") @Min(1) Long id) {
             return topicService.getTopic(id).get();
     }
 
     @PostMapping(value = "/topic", produces = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<Topic> addTopic(@Valid  @RequestBody Topic topic, UriComponentsBuilder builder) {
 
             Optional<Topic> topicCreated =  topicService.addTopic(topic);
@@ -48,25 +48,25 @@ public class TopicController {
             return new ResponseEntity<Topic>(topicCreated.get(), headers, HttpStatus.CREATED);
     }
 
-    @PutMapping(value = "/topics/{topicId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(value = "/{topicId}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
     public Topic updateTopic(@PathVariable("topicId") Long id, @RequestBody Topic topic) {
             return topicService.updateTopic(id, topic).get();
     }
 
-    @DeleteMapping(value = "/topics/{topicId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @DeleteMapping(value = "/{topicId}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteTopic(@PathVariable("topicId") Long id) {
             topicService.deleteTopic(id);
     }
 
-    @GetMapping(value = "/topics/byTopicName/{topicName}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/byTopicName/{topicName}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
     public Topic getTopic(@PathVariable("topicName") String topicName) {
         return topicService.getTopicByTopicName(topicName);
     }
 
-    @GetMapping(value = "/topics/byTopicDescription/{topicDescription}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/byTopicDescription/{topicDescription}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
     public List<Topic> getTopics(@PathVariable("topicDescription") String topicDescription) {
         return topicService.getTopicByTopicDescription(topicDescription);

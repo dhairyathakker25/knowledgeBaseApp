@@ -50,6 +50,13 @@ public class KnowledgeAppExceptionHandler extends ResponseEntityExceptionHandler
         return new CustomExceptionBean(ZonedDateTime.of(now(), ZoneId.of("UTC")).toString(), ex.getMessage(), ex.getTopicName());
     }
 
+    @ResponseStatus(HttpStatus.CONFLICT)
+    @ExceptionHandler(SubTopicNameNotUniqueException.class)
+    @ResponseBody
+    public final CustomExceptionBean handleSubTopicNameNotUniqueException(SubTopicNameNotUniqueException ex) {
+        return new CustomExceptionBean(ZonedDateTime.of(now(), ZoneId.of("UTC")).toString(), ex.getMessage(), ex.getSubTopicName());
+    }
+
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler(TopicIdNotFoundException.class)
     @ResponseBody

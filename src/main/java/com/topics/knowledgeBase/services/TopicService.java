@@ -8,6 +8,7 @@ import com.topics.knowledgeBase.repositories.TopicRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -32,8 +33,9 @@ public class TopicService {
             throw new TopicIdNotFoundException("Topic Id not found", topicId);
     }
 
+    @Transactional
     public Optional<Topic> addTopic(Topic topic) throws TopicNameNotUniqueException {
-        if(topicRepository.findOneByTopicName(topic.getTopicName()) == null)
+        if(!topicRepository.findOneByTopicName(topic.getTopicName()).isPresent())
             return Optional.of(topicRepository.saveAndFlush(topic));
         else
             throw new TopicNameNotUniqueException("Topic name exists", topic.getTopicName());
