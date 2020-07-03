@@ -1,10 +1,12 @@
 package com.topics.knowledgeBase.services;
 
 import com.topics.knowledgeBase.entities.Topic;
+import com.topics.knowledgeBase.exceptions.SubTopicNameNotUniqueException;
 import com.topics.knowledgeBase.exceptions.TopicNameNotFoundException;
 import com.topics.knowledgeBase.exceptions.TopicNameNotUniqueException;
 import com.topics.knowledgeBase.exceptions.TopicIdNotFoundException;
 import com.topics.knowledgeBase.repositories.TopicRepository;
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
@@ -34,9 +36,14 @@ public class TopicService {
     }
 
     @Transactional
-    public Optional<Topic> addTopic(Topic topic) throws TopicNameNotUniqueException {
+    public Optional<Topic> addTopic(Topic topic) {
         if(!topicRepository.findOneByTopicName(topic.getTopicName()).isPresent())
-            return Optional.of(topicRepository.saveAndFlush(topic));
+            try{
+                return Optional.of(topicRepository.saveAndFlush(topic));
+            } catch(DataIntegrityViolationException ex) {
+                throw new SubTopicNameNotUniqueException("sub Topic name not unique", ex.getMessage());
+            }
+
         else
             throw new TopicNameNotUniqueException("Topic name exists", topic.getTopicName());
 

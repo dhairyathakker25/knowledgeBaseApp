@@ -37,7 +37,7 @@ public class Topic {
 
     @OneToMany(mappedBy = "topic", cascade = CascadeType.ALL)
     @JsonManagedReference
-    private List<SubTopic> subTopics = new ArrayList<SubTopic>();
+    private List<SubTopic> subTopics;
 
     @Tolerate
     public Topic() {
