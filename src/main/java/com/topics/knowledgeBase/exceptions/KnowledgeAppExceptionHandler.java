@@ -9,6 +9,7 @@ import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.context.request.WebRequest;
@@ -76,5 +77,12 @@ public class KnowledgeAppExceptionHandler extends ResponseEntityExceptionHandler
     @ResponseBody
     public final CustomExceptionBean handleConstraintViolationException(ConstraintViolationException ex, HttpServletRequest request) {
         return new CustomExceptionBean(ZonedDateTime.of(now(), ZoneId.of("UTC")).toString(), ex.getMessage(), request.getRequestedSessionId());
+    }
+
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ExceptionHandler(SubTopicIdNotFoundForTopicException.class)
+    @ResponseBody
+    public final CustomExceptionBean handleSubTopicIdNotFoundForTopicException(SubTopicIdNotFoundForTopicException ex) {
+        return new CustomExceptionBean(ZonedDateTime.of(now(), ZoneId.of("UTC")).toString(), ex.getMessage(), ex.getSubTopicId().toString());
     }
 }

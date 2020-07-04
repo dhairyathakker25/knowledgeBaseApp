@@ -3,6 +3,7 @@ package com.topics.knowledgeBase.services;
 
 import com.topics.knowledgeBase.entities.SubTopic;
 import com.topics.knowledgeBase.entities.Topic;
+import com.topics.knowledgeBase.exceptions.SubTopicIdNotFoundForTopicException;
 import com.topics.knowledgeBase.exceptions.SubTopicNameNotUniqueException;
 import com.topics.knowledgeBase.exceptions.TopicIdNotFoundException;
 import com.topics.knowledgeBase.repositories.SubTopicRepository;
@@ -44,5 +45,22 @@ public class SubTopicService {
         } else {
             throw new TopicIdNotFoundException("Topic Id Not found", topicId);
         }
+    }
+
+    public SubTopic getSubTopicBySubTopicId(Long topicId, Long subTopicId) {
+        Optional<Topic> topic = topicRepository.findById(topicId);
+        if(topic.isPresent()) {
+
+            Optional<SubTopic> subTopic = topic.get().getSubTopics().stream().filter(c -> c.getSubTopicId()  == subTopicId).findFirst();
+
+            if (subTopic.isPresent())
+                return subTopic.get();
+            else
+                throw new SubTopicIdNotFoundForTopicException("subtopic not found for topic:"+topicId, subTopicId);
+
+        } else {
+            throw new TopicIdNotFoundException("Topic Id Not found", topicId);
+        }
+
     }
 }

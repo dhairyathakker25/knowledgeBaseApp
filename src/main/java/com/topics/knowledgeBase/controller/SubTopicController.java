@@ -37,4 +37,10 @@ public class SubTopicController {
     public SubTopic createSubTopicForTopicId(@PathVariable("topicId") Long topicId, @RequestBody SubTopic subTopic) {
         return subTopicService.createSubTopicsByTopicId(topicId, subTopic);
     }
+
+    @GetMapping(value = "/{topicId}/subTopics/{subTopicId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.OK)
+    public SubTopic getSubTopicForTopicId(@PathVariable("topicId") Long topicId, @PathVariable("subTopicId") Long subTopicId) {
+        return subTopicService.getSubTopicBySubTopicId(topicId, subTopicId);
+    }
 }
