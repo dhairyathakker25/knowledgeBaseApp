@@ -9,6 +9,7 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Tolerate;
+import org.springframework.hateoas.RepresentationModel;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -22,12 +23,12 @@ import javax.persistence.MapsId;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
-
-@Data
+@Getter
+@Setter
 @Builder
 @Entity
 @Table(name="sub_topic_table", uniqueConstraints = @UniqueConstraint(columnNames = {"sub_topic_name", "topic_topic_id"}))
-public class SubTopic {
+public class SubTopic extends RepresentationModel {
 
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)

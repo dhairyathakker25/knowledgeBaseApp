@@ -9,6 +9,7 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Tolerate;
+import org.springframework.hateoas.RepresentationModel;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
@@ -16,11 +17,12 @@ import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
 
-@Data
 @Builder
+@Getter
+@Setter
 @Entity
 @Table(name="topic_table")  //can include schema name for distinguishing same table across schemas
-public class Topic {
+public class Topic extends RepresentationModel {
 
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
