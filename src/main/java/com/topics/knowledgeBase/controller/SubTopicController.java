@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -49,5 +50,11 @@ public class SubTopicController {
     @ResponseStatus(HttpStatus.OK)
     public SubTopic updateSubTopicForTopicId(@PathVariable("topicId") Long topicId, @PathVariable("subTopicId") Long subTopicId, @RequestBody SubTopic subTopic) {
         return subTopicService.updateSubTopicBySubTopicId(topicId, subTopicId, subTopic);
+    }
+
+    @PatchMapping(value = "/{topicId}/subTopics/{subTopicId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.OK)
+    public SubTopic patchSubTopic(@PathVariable("topicId") Long topicId, @PathVariable("subTopicId") Long subTopicId, @RequestBody SubTopic patchSubTopic) {
+        return subTopicService.patchSubTopic(topicId, subTopicId, patchSubTopic);
     }
 }

@@ -2,6 +2,7 @@ package com.topics.knowledgeBase.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -28,6 +29,7 @@ import javax.persistence.UniqueConstraint;
 @Builder
 @Entity
 @Table(name="sub_topic_table", uniqueConstraints = @UniqueConstraint(columnNames = {"sub_topic_name", "topic_topic_id"}))
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class SubTopic extends RepresentationModel {
 
     @Id
