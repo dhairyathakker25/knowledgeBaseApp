@@ -10,6 +10,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -42,5 +43,11 @@ public class SubTopicController {
     @ResponseStatus(HttpStatus.OK)
     public SubTopic getSubTopicForTopicId(@PathVariable("topicId") Long topicId, @PathVariable("subTopicId") Long subTopicId) {
         return subTopicService.getSubTopicBySubTopicId(topicId, subTopicId);
+    }
+
+    @PutMapping(value = "/{topicId}/subTopics/{subTopicId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.OK)
+    public SubTopic updateSubTopicForTopicId(@PathVariable("topicId") Long topicId, @PathVariable("subTopicId") Long subTopicId, @RequestBody SubTopic subTopic) {
+        return subTopicService.updateSubTopicBySubTopicId(topicId, subTopicId, subTopic);
     }
 }

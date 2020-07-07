@@ -47,6 +47,28 @@ public class SubTopicService {
         }
     }
 
+    public SubTopic updateSubTopicBySubTopicId(Long topicId, Long subTopicId, SubTopic subTopic) {
+        Optional<Topic> topic = topicRepository.findById(topicId);
+        if(topic.isPresent()) {
+            Optional<SubTopic> subTopicToUpdate = topic.get().getSubTopics().stream().filter(c -> c.getSubTopicId()  == subTopicId).findFirst();
+
+            if(subTopicToUpdate.isPresent()) {
+                try {
+                    subTopic.setTopic(topic.get());
+                    subTopic.setSubTopicId(subTopicId);
+                    return subTopicRepository.saveAndFlush(subTopic);
+                } catch(DataIntegrityViolationException ex) {
+                    throw new SubTopicNameNotUniqueException("SubTopic name not unique", subTopic.getSubTopicName());
+                }
+            } else {
+                throw new SubTopicIdNotFoundForTopicException("Sub Topic Id Not found", subTopicId);
+            }
+
+        } else {
+            throw new TopicIdNotFoundException("Topic Id Not found", topicId);
+        }
+    }
+
     public SubTopic getSubTopicBySubTopicId(Long topicId, Long subTopicId) {
         Optional<Topic> topic = topicRepository.findById(topicId);
         if(topic.isPresent()) {
