@@ -22,6 +22,7 @@ import java.util.List;
 @Setter
 @Entity
 @Table(name="topic_table")  //can include schema name for distinguishing same table across schemas
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Topic extends RepresentationModel {
 
     @Id

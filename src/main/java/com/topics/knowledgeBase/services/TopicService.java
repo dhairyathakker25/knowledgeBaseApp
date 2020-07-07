@@ -1,5 +1,7 @@
 package com.topics.knowledgeBase.services;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.topics.knowledgeBase.entities.Topic;
 import com.topics.knowledgeBase.exceptions.SubTopicNameNotUniqueException;
 import com.topics.knowledgeBase.exceptions.TopicNameNotFoundException;
@@ -11,8 +13,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.ReflectionUtils;
 
+import java.lang.reflect.Field;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -20,6 +25,9 @@ public class TopicService {
 
     @Autowired
     private TopicRepository topicRepository;
+
+    @Autowired
+    ObjectMapper objectMapper;
 
     public List<Topic> getAllTopics() {
         return topicRepository.findAll();
@@ -63,6 +71,30 @@ public class TopicService {
 
         } else
             throw new TopicIdNotFoundException("Topic Id not found for update", topicId);
+    }
+
+
+    public Optional<Topic> patchTopic(Long topicId, Topic patchTopic) {
+
+        Optional<Topic> topic = topicRepository.findById(topicId);
+
+        if(topic.isPresent()) {
+            try {
+                Map<String, Object> patchFields = objectMapper.convertValue(patchTopic, new TypeReference<Map<String, Object>>() {});
+
+                patchFields.forEach((k, v) -> {
+                    // use reflection to get field k on manager and set it to value v
+                    Field field = ReflectionUtils.findField(Topic.class, k);
+                    field.setAccessible(true);
+                    ReflectionUtils.setField(field, topic.get(), v);
+                });
+                return Optional.of(topicRepository.saveAndFlush(topic.get()));
+            } catch(DataIntegrityViolationException e) {
+                throw new TopicNameNotUniqueException("Topic name exists", patchTopic.getTopicName());
+            }
+
+        } else
+            throw new TopicIdNotFoundException("Topic Id not found for update", topicId);
 
 
     }
@@ -86,5 +118,6 @@ public class TopicService {
     public List<Topic> getTopicByTopicDescription(String topicDescription) {
         return topicRepository.findAllByTopicDescription(topicDescription);
     }
+
 
 }

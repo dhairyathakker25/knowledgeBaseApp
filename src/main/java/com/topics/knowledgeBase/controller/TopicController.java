@@ -72,7 +72,13 @@ public class TopicController {
     @PutMapping(value = "/{topicId}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
     public Topic updateTopic(@PathVariable("topicId") Long id, @RequestBody Topic topic) {
-            return topicService.updateTopic(id, topic).get();
+            return topicService.patchTopic(id, topic).get();
+    }
+
+    @PatchMapping(value = "/{topicId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.OK)
+    public Topic patchTopic(@PathVariable("topicId") Long id, @RequestBody Topic topic) {
+        return topicService.patchTopic(id, topic).get();
     }
 
     @DeleteMapping(value = "/{topicId}", produces = MediaType.APPLICATION_JSON_VALUE)
