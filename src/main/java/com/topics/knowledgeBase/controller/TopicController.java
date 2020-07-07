@@ -5,6 +5,8 @@ import com.topics.knowledgeBase.exceptions.TopicNameNotUniqueException;
 import com.topics.knowledgeBase.exceptions.TopicIdNotFoundException;
 import com.topics.knowledgeBase.services.TopicService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -17,6 +19,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import javax.validation.Valid;
 import javax.validation.constraints.Min;
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 
 @RestController
@@ -26,6 +29,24 @@ public class TopicController {
 
     @Autowired
     TopicService topicService;
+
+    @Autowired
+    ResourceBundleMessageSource messageSource;
+
+    @GetMapping(value = "/greetings", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.OK)
+    public String getAppGreetings(@RequestHeader(name = "Accept-Language", required = false) String locale) {
+        if(locale != null)
+            return messageSource.getMessage("label.greetings", null, new Locale(locale));
+        else
+            return messageSource.getMessage("label.greetings", null, new Locale("en"));
+    }
+
+    @GetMapping(value = "/greetings-without-locale", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.OK)
+    public String getAppGreetings() {
+        return messageSource.getMessage("label.greetings", null, LocaleContextHolder.getLocale());
+    }
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)

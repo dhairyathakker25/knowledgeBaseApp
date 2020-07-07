@@ -29,10 +29,6 @@ import java.util.Optional;
 @RequestMapping(value = "/hateoas/topics")
 public class TopicHateoasController {
 
-
-    @Autowired
-    private TopicRepository topicRepository;
-
     @Autowired
     private TopicService topicService;
 
