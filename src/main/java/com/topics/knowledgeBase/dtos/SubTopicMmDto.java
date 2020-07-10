@@ -1,7 +1,8 @@
-package com.topics.knowledgeBase.entities;
+package com.topics.knowledgeBase.dtos;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.topics.knowledgeBase.entities.Topic;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -22,30 +23,20 @@ import javax.persistence.UniqueConstraint;
 @Getter
 @Setter
 @Builder
-@Entity
-@Table(name="sub_topic_table", uniqueConstraints = @UniqueConstraint(columnNames = {"sub_topic_name", "topic_topic_id"}))
 @JsonInclude(JsonInclude.Include.NON_NULL)
 //@JsonFilter(value = "subTopicFilter") // -- commented for jsonviews
 //@JsonView(AllView.Internal.class)  // -- comment for json filter
-public class SubTopic {
+public class SubTopicMmDto extends RepresentationModel{
 
-    @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
     private Long subTopicId;
-
-    @Column(name = "sub_topic_name", length = 30, nullable = false)
     private String subTopicName;
-
-    @Column(name = "sub_topic_description", length = 50, nullable = false)
     private String subTopicDescription;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="topic_topic_id", nullable=false)
-    @JsonBackReference   //could use json ignore properties as well but found this one to be better
-    private Topic topic;
+    @JsonBackReference
+    private TopicMmDto topic;
 
     @Tolerate
-    public SubTopic() {
+    public SubTopicMmDto() {
         // no args constructor is required for JPA which conflicts with lombok Builder
     }
 

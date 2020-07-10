@@ -1,12 +1,8 @@
 package com.topics.knowledgeBase.entities;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonFilter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Builder;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Tolerate;
@@ -15,7 +11,6 @@ import org.springframework.hateoas.RepresentationModel;
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
-import java.util.ArrayList;
 import java.util.List;
 
 @Builder
@@ -25,7 +20,7 @@ import java.util.List;
 @Table(name="topic_table")  //can include schema name for distinguishing same table across schemas
 @JsonInclude(JsonInclude.Include.NON_NULL)
 //@JsonFilter(value = "topicFilter")   //comment for jsonfilter
-public class Topic extends RepresentationModel {
+public class Topic {
 
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)

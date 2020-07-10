@@ -2,13 +2,14 @@ package com.topics.knowledgeBase.services;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.topics.knowledgeBase.dtos.TopicMmDto;
 import com.topics.knowledgeBase.entities.Topic;
 import com.topics.knowledgeBase.exceptions.SubTopicNameNotUniqueException;
 import com.topics.knowledgeBase.exceptions.TopicNameNotFoundException;
 import com.topics.knowledgeBase.exceptions.TopicNameNotUniqueException;
 import com.topics.knowledgeBase.exceptions.TopicIdNotFoundException;
 import com.topics.knowledgeBase.repositories.TopicRepository;
-import org.hibernate.exception.ConstraintViolationException;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,7 @@ import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class TopicService {
@@ -38,7 +40,7 @@ public class TopicService {
         Optional<Topic> topic = topicRepository.findById(topicId);
 
         if(topic.isPresent())
-            return topic;
+            return Optional.of(topic.get());
         else
             throw new TopicIdNotFoundException("Topic Id not found", topicId);
     }
@@ -80,7 +82,8 @@ public class TopicService {
 
         if(topic.isPresent()) {
             try {
-                Map<String, Object> patchFields = objectMapper.convertValue(patchTopic, new TypeReference<Map<String, Object>>() {});
+                Map<String, Object> patchFields = objectMapper.convertValue(patchTopic,
+                        new TypeReference<Map<String, Object>>() {});
 
                 patchFields.forEach((k, v) -> {
                     // use reflection to get field k on manager and set it to value v
@@ -118,6 +121,5 @@ public class TopicService {
     public List<Topic> getTopicByTopicDescription(String topicDescription) {
         return topicRepository.findAllByTopicDescription(topicDescription);
     }
-
 
 }
