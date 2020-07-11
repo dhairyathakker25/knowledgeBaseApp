@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @Validated
-@RequestMapping(value = "/topics")
+@RequestMapping({"/topics", "/v2/topics"})
 public class SubTopicController {
 
     @Autowired
