@@ -19,6 +19,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.Size;
 
 @Getter
 @Setter
@@ -29,7 +30,11 @@ import javax.persistence.UniqueConstraint;
 public class SubTopicMmDtoV2 extends RepresentationModel{
 
     private Long subTopicId;
+
+    @Size(max=50, message = "Size cannot be more than 30 characters")
     private String subTopicName;
+
+    @Size(max=50, message = "Size cannot be more than 50 characters")
     private String subTopicDescription;
 
     @JsonBackReference

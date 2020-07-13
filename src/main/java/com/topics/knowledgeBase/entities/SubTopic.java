@@ -18,6 +18,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.Size;
 
 @Getter
 @Setter
@@ -35,6 +36,7 @@ public class SubTopic {
 
     @Column(name = "sub_topic_name", length = 30, nullable = false)
     private String subTopicName;
+
 
     @Column(name = "sub_topic_description", length = 50, nullable = false)
     private String subTopicDescription;

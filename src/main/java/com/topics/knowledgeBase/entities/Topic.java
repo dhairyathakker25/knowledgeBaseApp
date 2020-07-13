@@ -26,14 +26,14 @@ public class Topic {
     @GeneratedValue(strategy=GenerationType.AUTO)
     private Long topicId;
 
-    @NotEmpty(message = "Topic Name cannot be empty")
-    @Size(min=2, message = "Size must be atleast 2 characters")
-    @Size(max=20, message = "Size cannot be more than 20 characters")
+
     @Column(name = "topic_name", length = 20, nullable = false, unique = true)
     private String topicName;
 
+
     @Column(name = "topic_description", length = 50, nullable = false)
     private String topicDescription;
+
 
     @Column(name = "topic_author", length = 50)
     private String topicAuthor;
