@@ -36,6 +36,8 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-hateoas'
 	implementation 'org.projectlombok:lombok'
 	implementation 'org.modelmapper:modelmapper:2.3.5'
+	implementation 'io.micrometer:micrometer-core:1.5.2'
+	implementation 'io.micrometer:micrometer-registry-jmx:1.5.2'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	runtimeOnly 'com.h2database:h2'
 	annotationProcessor 'org.projectlombok:lombok'
