@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,7 +28,7 @@ import java.util.stream.Collectors;
 @Api(tags = "sub Topic Management Controller", value = "Sub TopicController")
 @RestController
 @Validated
-@RequestMapping({"/topics", "/v2/topics"})
+@RequestMapping({"/topics/v1", "/topics/v2"})
 public class SubTopicController {
 
     @Autowired
@@ -73,5 +74,12 @@ public class SubTopicController {
     public SubTopicMmDto patchSubTopic(@PathVariable("topicId") Long topicId, @PathVariable("subTopicId") Long subTopicId, @RequestBody SubTopicMmDto patchSubTopic) {
         SubTopic subTopicToPatch = modelMapper.map(patchSubTopic, SubTopic.class);
         return modelMapper.map(subTopicService.patchSubTopic(topicId, subTopicId, subTopicToPatch), SubTopicMmDto.class);
+    }
+
+    @ApiOperation(value = "delete subtopic under topic Id, all fields not required")
+    @DeleteMapping(value = "/{topicId}/subTopics/{subTopicId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteSubTopic(@PathVariable("topicId") Long topicId, @PathVariable("subTopicId") Long subTopicId) {
+        subTopicService.deleteSubtopic(topicId, subTopicId);
     }
 }

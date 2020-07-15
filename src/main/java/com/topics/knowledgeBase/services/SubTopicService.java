@@ -130,4 +130,24 @@ public class SubTopicService {
         }
 
     }
+
+    public void deleteSubtopic(Long topicId, Long subTopicId) {
+        Optional<Topic> topic = topicRepository.findById(topicId);
+        if (topic.isPresent()) {
+
+            Optional<SubTopic> subTopic = topic.get().getSubTopics().stream().filter(c -> c.getSubTopicId() == subTopicId).findFirst();
+
+            if (subTopic.isPresent()) {
+                topic.get().getSubTopics().remove(subTopic.get());
+                topicRepository.saveAndFlush(topic.get());
+
+            }
+
+            else
+                throw new SubTopicIdNotFoundForTopicException("subtopic not found for topic:" + topicId, subTopicId);
+
+        } else {
+            throw new TopicIdNotFoundException("Topic Id Not found", topicId);
+        }
+    }
 }

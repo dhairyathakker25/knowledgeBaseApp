@@ -1,0 +1,1189 @@
+swagger: '2.0'
+info:
+  description: this page lists all endpoints for the service
+  version: '2.0'
+  title: Knowledge App service for demo
+  contact:
+    name: Dhairya Thakker
+    url: 'https://github.com/dhairyathakker25'
+    email: dhairyathakker25@gmail.com
+host: 'localhost:8081'
+basePath: /
+tags:
+  - name: Topic Management Controller
+    description: Topic Controller
+  - name: sub Topic Management Controller
+    description: Sub Topic Controller
+  - name: topic-v-2-controller
+    description: Topic V 2 Controller
+paths:
+  /topics/v1:
+    get:
+      tags:
+        - Topic Management Controller
+      summary: 'get List of topics '
+      operationId: getAllTopicsUsingGET
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/TopicMmDtoRes'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/topics/v1/byTopicDescription/{topicDescription}':
+    get:
+      tags:
+        - Topic Management Controller
+      summary: 'get topic based on topic description '
+      operationId: getTopicsUsingGET
+      produces:
+        - application/json
+      parameters:
+        - name: topicDescription
+          in: path
+          description: topicDescription
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/TopicMmDtoRes'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/topics/v1/byTopicName/{topicName}':
+    get:
+      tags:
+        - Topic Management Controller
+      summary: 'get topic based on topic name '
+      operationId: getTopicUsingGET_1
+      produces:
+        - application/json
+      parameters:
+        - name: topicName
+          in: path
+          description: topicName
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/TopicMmDtoRes'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /topics/v1/greetings:
+    get:
+      tags:
+        - Topic Management Controller
+      summary: get greetings for the app in english and french
+      operationId: getAppGreetingsUsingGET_1
+      produces:
+        - application/json
+      parameters:
+        - name: Accept-Language
+          in: header
+          description: Accept-Language
+          required: false
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: string
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /topics/v1/greetings-without-locale:
+    get:
+      tags:
+        - Topic Management Controller
+      summary: get default greetings for the app
+      operationId: getAppGreetingsUsingGET
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: string
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /topics/v1/topic:
+    post:
+      tags:
+        - Topic Management Controller
+      summary: 'post or create  topic '
+      operationId: addTopicUsingPOST
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: topic
+          description: topic details to create new topic
+          required: true
+          schema:
+            $ref: '#/definitions/TopicMmDtoReq'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/TopicMmDtoRes'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/topics/v1/{topicId}':
+    get:
+      tags:
+        - Topic Management Controller
+      summary: 'get  topic based on topic id '
+      operationId: getTopicUsingGET
+      produces:
+        - application/json
+      parameters:
+        - name: topicId
+          in: path
+          description: topicId
+          required: true
+          type: integer
+          minimum: 1
+          exclusiveMinimum: false
+          format: int64
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/TopicMmDtoRes'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+    put:
+      tags:
+        - Topic Management Controller
+      summary: 'update topic based on id '
+      operationId: updateTopicUsingPUT
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: topic
+          description: topic body  to update topic
+          required: true
+          schema:
+            $ref: '#/definitions/TopicMmDtoReq'
+        - name: topicId
+          in: path
+          description: topic Id to update topic
+          required: true
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/TopicMmDtoRes'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+    delete:
+      tags:
+        - Topic Management Controller
+      summary: 'delete topic based on id '
+      operationId: deleteTopicUsingDELETE
+      produces:
+        - application/json
+      parameters:
+        - name: topicId
+          in: path
+          description: topicId
+          required: true
+          type: integer
+          format: int64
+      responses:
+        '204':
+          description: No Content
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+    patch:
+      tags:
+        - Topic Management Controller
+      summary: 'patch topic based on id '
+      operationId: patchTopicUsingPATCH
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: topic
+          description: topic
+          required: true
+          schema:
+            $ref: '#/definitions/TopicMmDtoReq'
+        - name: topicId
+          in: path
+          description: topicId
+          required: true
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/TopicMmDtoRes'
+        '204':
+          description: No Content
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+  '/topics/v1/{topicId}/subTopics':
+    get:
+      tags:
+        - sub Topic Management Controller
+      summary: get list of subtopics under topic Id
+      operationId: getSubTopicsByTopicIdUsingGET
+      produces:
+        - application/json
+      parameters:
+        - name: topicId
+          in: path
+          description: topicId
+          required: true
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/SubTopicMmDtoRes'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/topics/v1/{topicId}/subTopics/subTopic':
+    post:
+      tags:
+        - sub Topic Management Controller
+      summary: create subtopic under topic Id
+      operationId: createSubTopicForTopicIdUsingPOST
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: subTopic
+          description: subTopic
+          required: true
+          schema:
+            $ref: '#/definitions/SubTopicMmDtoReq'
+        - name: topicId
+          in: path
+          description: topicId
+          required: true
+          type: integer
+          format: int64
+      responses:
+        '201':
+          description: Created
+          schema:
+            $ref: '#/definitions/SubTopicMmDtoRes'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/topics/v1/{topicId}/subTopics/{subTopicId}':
+    get:
+      tags:
+        - sub Topic Management Controller
+      summary: get subtopic under topic Id
+      operationId: getSubTopicForTopicIdUsingGET
+      produces:
+        - application/json
+      parameters:
+        - name: subTopicId
+          in: path
+          description: subTopicId
+          required: true
+          type: integer
+          format: int64
+        - name: topicId
+          in: path
+          description: topicId
+          required: true
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/SubTopicMmDtoRes'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+    put:
+      tags:
+        - sub Topic Management Controller
+      summary: update subtopic under topic Id
+      operationId: updateSubTopicForTopicIdUsingPUT
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: subTopic
+          description: subTopic
+          required: true
+          schema:
+            $ref: '#/definitions/SubTopicMmDtoReq'
+        - name: subTopicId
+          in: path
+          description: subTopicId
+          required: true
+          type: integer
+          format: int64
+        - name: topicId
+          in: path
+          description: topicId
+          required: true
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/SubTopicMmDtoRes'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+    delete:
+      tags:
+        - sub Topic Management Controller
+      summary: 'delete subtopic under topic Id, all fields not required'
+      operationId: deleteSubTopicUsingDELETE
+      produces:
+        - application/json
+      parameters:
+        - name: subTopicId
+          in: path
+          description: subTopicId
+          required: true
+          type: integer
+          format: int64
+        - name: topicId
+          in: path
+          description: topicId
+          required: true
+          type: integer
+          format: int64
+      responses:
+        '204':
+          description: No Content
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+    patch:
+      tags:
+        - sub Topic Management Controller
+      summary: 'update subtopic under topic Id, all fields not required'
+      operationId: patchSubTopicUsingPATCH
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: patchSubTopic
+          description: patchSubTopic
+          required: true
+          schema:
+            $ref: '#/definitions/SubTopicMmDtoReq'
+        - name: subTopicId
+          in: path
+          description: subTopicId
+          required: true
+          type: integer
+          format: int64
+        - name: topicId
+          in: path
+          description: topicId
+          required: true
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/SubTopicMmDtoRes'
+        '204':
+          description: No Content
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+  /topics/v2:
+    get:
+      tags:
+        - topic-v-2-controller
+      summary: getAllTopics
+      operationId: getAllTopicsUsingGET_1
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/TopicMmDtoV2Res'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/topics/v2/byTopicDescription/{topicDescription}':
+    get:
+      tags:
+        - topic-v-2-controller
+      summary: getTopics
+      operationId: getTopicsUsingGET_1
+      produces:
+        - application/json
+      parameters:
+        - name: topicDescription
+          in: path
+          description: topicDescription
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/TopicMmDtoV2Res'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/topics/v2/byTopicName/{topicName}':
+    get:
+      tags:
+        - topic-v-2-controller
+      summary: getTopic
+      operationId: getTopicUsingGET_3
+      produces:
+        - application/json
+      parameters:
+        - name: topicName
+          in: path
+          description: topicName
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/TopicMmDtoV2Res'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /topics/v2/greetings:
+    get:
+      tags:
+        - topic-v-2-controller
+      summary: getAppGreetings
+      operationId: getAppGreetingsUsingGET_3
+      produces:
+        - application/json
+      parameters:
+        - name: Accept-Language
+          in: header
+          description: Accept-Language
+          required: false
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: string
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /topics/v2/greetings-without-locale:
+    get:
+      tags:
+        - topic-v-2-controller
+      summary: getAppGreetings
+      operationId: getAppGreetingsUsingGET_2
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: string
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  /topics/v2/topic:
+    post:
+      tags:
+        - topic-v-2-controller
+      summary: addTopic
+      operationId: addTopicUsingPOST_1
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: topic
+          description: topic
+          required: true
+          schema:
+            $ref: '#/definitions/TopicMmDtoV2Req'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/TopicMmDtoV2Res'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/topics/v2/{topicId}':
+    get:
+      tags:
+        - topic-v-2-controller
+      summary: getTopic
+      operationId: getTopicUsingGET_2
+      produces:
+        - application/json
+      parameters:
+        - name: topicId
+          in: path
+          description: topicId
+          required: true
+          type: integer
+          minimum: 1
+          exclusiveMinimum: false
+          format: int64
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/TopicMmDtoV2Res'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+    put:
+      tags:
+        - topic-v-2-controller
+      summary: updateTopic
+      operationId: updateTopicUsingPUT_1
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: topic
+          description: topic
+          required: true
+          schema:
+            $ref: '#/definitions/TopicMmDtoV2Req'
+        - name: topicId
+          in: path
+          description: topicId
+          required: true
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/TopicMmDtoV2Res'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+    delete:
+      tags:
+        - topic-v-2-controller
+      summary: deleteTopic
+      operationId: deleteTopicUsingDELETE_1
+      produces:
+        - application/json
+      parameters:
+        - name: topicId
+          in: path
+          description: topicId
+          required: true
+          type: integer
+          format: int64
+      responses:
+        '204':
+          description: No Content
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+    patch:
+      tags:
+        - topic-v-2-controller
+      summary: patchTopic
+      operationId: patchTopicUsingPATCH_1
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: topic
+          description: topic
+          required: true
+          schema:
+            $ref: '#/definitions/TopicMmDtoV2Req'
+        - name: topicId
+          in: path
+          description: topicId
+          required: true
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/TopicMmDtoV2Res'
+        '204':
+          description: No Content
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+  '/topics/v2/{topicId}/subTopics':
+    get:
+      tags:
+        - sub Topic Management Controller
+      summary: get list of subtopics under topic Id
+      operationId: getSubTopicsByTopicIdUsingGET_1
+      produces:
+        - application/json
+      parameters:
+        - name: topicId
+          in: path
+          description: topicId
+          required: true
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/SubTopicMmDtoRes'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/topics/v2/{topicId}/subTopics/subTopic':
+    post:
+      tags:
+        - sub Topic Management Controller
+      summary: create subtopic under topic Id
+      operationId: createSubTopicForTopicIdUsingPOST_1
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: subTopic
+          description: subTopic
+          required: true
+          schema:
+            $ref: '#/definitions/SubTopicMmDtoReq'
+        - name: topicId
+          in: path
+          description: topicId
+          required: true
+          type: integer
+          format: int64
+      responses:
+        '201':
+          description: Created
+          schema:
+            $ref: '#/definitions/SubTopicMmDtoRes'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+  '/topics/v2/{topicId}/subTopics/{subTopicId}':
+    get:
+      tags:
+        - sub Topic Management Controller
+      summary: get subtopic under topic Id
+      operationId: getSubTopicForTopicIdUsingGET_1
+      produces:
+        - application/json
+      parameters:
+        - name: subTopicId
+          in: path
+          description: subTopicId
+          required: true
+          type: integer
+          format: int64
+        - name: topicId
+          in: path
+          description: topicId
+          required: true
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/SubTopicMmDtoRes'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+    put:
+      tags:
+        - sub Topic Management Controller
+      summary: update subtopic under topic Id
+      operationId: updateSubTopicForTopicIdUsingPUT_1
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: subTopic
+          description: subTopic
+          required: true
+          schema:
+            $ref: '#/definitions/SubTopicMmDtoReq'
+        - name: subTopicId
+          in: path
+          description: subTopicId
+          required: true
+          type: integer
+          format: int64
+        - name: topicId
+          in: path
+          description: topicId
+          required: true
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/SubTopicMmDtoRes'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+    delete:
+      tags:
+        - sub Topic Management Controller
+      summary: 'delete subtopic under topic Id, all fields not required'
+      operationId: deleteSubTopicUsingDELETE_1
+      produces:
+        - application/json
+      parameters:
+        - name: subTopicId
+          in: path
+          description: subTopicId
+          required: true
+          type: integer
+          format: int64
+        - name: topicId
+          in: path
+          description: topicId
+          required: true
+          type: integer
+          format: int64
+      responses:
+        '204':
+          description: No Content
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+    patch:
+      tags:
+        - sub Topic Management Controller
+      summary: 'update subtopic under topic Id, all fields not required'
+      operationId: patchSubTopicUsingPATCH_1
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: patchSubTopic
+          description: patchSubTopic
+          required: true
+          schema:
+            $ref: '#/definitions/SubTopicMmDtoReq'
+        - name: subTopicId
+          in: path
+          description: subTopicId
+          required: true
+          type: integer
+          format: int64
+        - name: topicId
+          in: path
+          description: topicId
+          required: true
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/SubTopicMmDtoRes'
+        '204':
+          description: No Content
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+definitions:
+  Link:
+    type: object
+    properties:
+      deprecation:
+        type: string
+      href:
+        type: string
+      hreflang:
+        type: string
+      media:
+        type: string
+      name:
+        type: string
+      profile:
+        type: string
+      rel:
+        $ref: '#/definitions/LinkRelation'
+      title:
+        type: string
+      type:
+        type: string
+    title: Link
+  LinkRelation:
+    type: object
+    title: LinkRelation
+  Links:
+    type: object
+    properties:
+      empty:
+        type: boolean
+    title: Links
+  SubTopicMmDtoReq:
+    type: object
+    required:
+      - subTopicDescription
+      - subTopicId
+      - subTopicName
+    properties:
+      _links:
+        type: array
+        items:
+          $ref: '#/definitions/Link'
+      subTopicDescription:
+        type: string
+        description: sub topic desctiption to be provided
+        minLength: 0
+        maxLength: 50
+      subTopicId:
+        type: integer
+        format: int64
+        description: topic auto generated
+      subTopicName:
+        type: string
+        description: sub topic name to be provided
+        minLength: 0
+        maxLength: 50
+      topic:
+        $ref: '#/definitions/TopicMmDtoReq'
+    title: SubTopicMmDtoReq
+  SubTopicMmDtoRes:
+    type: object
+    required:
+      - subTopicDescription
+      - subTopicId
+      - subTopicName
+    properties:
+      _links:
+        $ref: '#/definitions/Links'
+      subTopicDescription:
+        type: string
+        description: sub topic desctiption to be provided
+        minLength: 0
+        maxLength: 50
+      subTopicId:
+        type: integer
+        format: int64
+        description: topic auto generated
+      subTopicName:
+        type: string
+        description: sub topic name to be provided
+        minLength: 0
+        maxLength: 50
+      topic:
+        $ref: '#/definitions/TopicMmDtoRes'
+    title: SubTopicMmDtoRes
+  SubTopicMmDtoV2Req:
+    type: object
+    properties:
+      _links:
+        type: array
+        items:
+          $ref: '#/definitions/Link'
+      subTopicDescription:
+        type: string
+        minLength: 0
+        maxLength: 50
+      subTopicId:
+        type: integer
+        format: int64
+      subTopicName:
+        type: string
+        minLength: 0
+        maxLength: 50
+      topic:
+        $ref: '#/definitions/TopicMmDtoV2Req'
+    title: SubTopicMmDtoV2Req
+  SubTopicMmDtoV2Res:
+    type: object
+    properties:
+      _links:
+        $ref: '#/definitions/Links'
+      subTopicDescription:
+        type: string
+        minLength: 0
+        maxLength: 50
+      subTopicId:
+        type: integer
+        format: int64
+      subTopicName:
+        type: string
+        minLength: 0
+        maxLength: 50
+      topic:
+        $ref: '#/definitions/TopicMmDtoV2Res'
+    title: SubTopicMmDtoV2Res
+  TopicMmDtoReq:
+    type: object
+    required:
+      - topicDescription
+      - topicId
+      - topicName
+    properties:
+      _links:
+        type: array
+        items:
+          $ref: '#/definitions/Link'
+      subTopics:
+        type: array
+        description: list of subtopics
+        items:
+          $ref: '#/definitions/SubTopicMmDtoReq'
+      topicDescription:
+        type: string
+        description: topic description to be provided
+        minLength: 0
+        maxLength: 50
+      topicId:
+        type: integer
+        format: int64
+        description: auto generated topic id
+      topicName:
+        type: string
+        description: topic name to be provided
+        minLength: 2
+        maxLength: 20
+    title: TopicMmDtoReq
+    description: this model is to create topic
+  TopicMmDtoRes:
+    type: object
+    required:
+      - topicDescription
+      - topicId
+      - topicName
+    properties:
+      _links:
+        $ref: '#/definitions/Links'
+      subTopics:
+        type: array
+        description: list of subtopics
+        items:
+          $ref: '#/definitions/SubTopicMmDtoRes'
+      topicDescription:
+        type: string
+        description: topic description to be provided
+        minLength: 0
+        maxLength: 50
+      topicId:
+        type: integer
+        format: int64
+        description: auto generated topic id
+      topicName:
+        type: string
+        description: topic name to be provided
+        minLength: 2
+        maxLength: 20
+    title: TopicMmDtoRes
+    description: this model is to create topic
+  TopicMmDtoV2Req:
+    type: object
+    properties:
+      _links:
+        type: array
+        items:
+          $ref: '#/definitions/Link'
+      subTopics:
+        type: array
+        items:
+          $ref: '#/definitions/SubTopicMmDtoV2Req'
+      topicAuthor:
+        type: string
+        minLength: 0
+        maxLength: 50
+      topicDescription:
+        type: string
+        minLength: 0
+        maxLength: 50
+      topicId:
+        type: integer
+        format: int64
+      topicName:
+        type: string
+        minLength: 2
+        maxLength: 20
+    title: TopicMmDtoV2Req
+  TopicMmDtoV2Res:
+    type: object
+    properties:
+      _links:
+        $ref: '#/definitions/Links'
+      subTopics:
+        type: array
+        items:
+          $ref: '#/definitions/SubTopicMmDtoV2Res'
+      topicAuthor:
+        type: string
+        minLength: 0
+        maxLength: 50
+      topicDescription:
+        type: string
+        minLength: 0
+        maxLength: 50
+      topicId:
+        type: integer
+        format: int64
+      topicName:
+        type: string
+        minLength: 2
+        maxLength: 20
+    title: TopicMmDtoV2Res

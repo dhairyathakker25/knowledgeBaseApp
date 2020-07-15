@@ -34,7 +34,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @Validated
-@RequestMapping(value = "/v2/topics")
+@RequestMapping(value = "/topics/v2")
 public class TopicV2Controller {
 
     @Autowired

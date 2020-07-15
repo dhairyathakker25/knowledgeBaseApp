@@ -38,7 +38,7 @@ public class Topic {
     @Column(name = "topic_author", length = 50)
     private String topicAuthor;
 
-    @OneToMany(mappedBy = "topic", cascade = CascadeType.ALL)
+    @OneToMany(orphanRemoval = true, mappedBy = "topic", cascade = CascadeType.ALL)
     @JsonManagedReference
     private List<SubTopic> subTopics;
 

@@ -28,7 +28,7 @@ import java.util.stream.Collectors;
 @Api(tags = "Topic Management Controller", value = "TopicController")
 @RestController
 @Validated
-@RequestMapping(value = "/topics")
+@RequestMapping(value = "/topics/v1")
 public class TopicController {
 
     @Autowired
