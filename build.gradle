@@ -39,7 +39,7 @@ dependencies {
 	implementation 'io.micrometer:micrometer-core:1.5.2'
 	implementation 'io.micrometer:micrometer-registry-jmx:1.5.2'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
-	runtimeOnly 'com.h2database:h2'
+	runtimeOnly 'org.postgresql:postgresql'
 	annotationProcessor 'org.projectlombok:lombok'
 
 	implementation 'io.springfox:springfox-swagger2:3.0.0-SNAPSHOT'
