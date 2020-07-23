@@ -9,7 +9,9 @@ services:
     depends_on:
       - dbpostgresql
   dbpostgresql:
-    image: postgres:9.6.8-alpine
+    build:
+      context: ./db-init
+      dockerfile: Dockerfile
     restart: unless-stopped
     ports:
       - "5432:5432"
