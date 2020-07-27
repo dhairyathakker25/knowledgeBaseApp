@@ -13,6 +13,7 @@ popular choice.
 
 At present the project can be run locally on port 8081 , 
 can be changed in application.properties using ./gradlew bootrun
+It is also dockerized now so can be run as docker-compose up and terminated using docker-compose down
 
 **Tests**
 
@@ -20,12 +21,12 @@ At present there are no set of tests running against it but they are all in TODO
 
 **Still To Come**
 
-1. docker build
-2. replace In memory database H2 with Postgresql (Docker image)
-3. K8's Integration
-4. Unit Tests using Junit and Mockito
-5. Functional/Integration test
-6. Performance Test using Gatling
+1. K8's Integration
+2. Unit Tests using Junit and Mockito
+3. Functional/Integration test
+4. Performance Test using Gatling
+5. Liquibase
+6. deploy to K'8 cluster on EKS.
 
 **Author**
 
