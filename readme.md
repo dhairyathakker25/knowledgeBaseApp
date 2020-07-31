@@ -13,7 +13,10 @@ popular choice.
 
 At present the project can be run locally on port 8081 , 
 can be changed in application.properties using ./gradlew bootrun
-It is also dockerized now so can be run as docker-compose up and terminated using docker-compose down
+It is also dockerized now so can be run as 
+"docker-compose up --build"  (first time when building)
+else just use "docker-compose up" 
+and terminated using docker-compose down
 
 **Tests**
 
