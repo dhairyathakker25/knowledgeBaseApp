@@ -1,0 +1,14 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: postgres-service
+spec:
+  selector:
+    app: postgres
+  ports:
+    - protocol: "TCP"
+      port: 5432
+      # Port accessible inside cluster
+      targetPort: 5432
+  type: ClusterIP  #need to change to cluster ip
+

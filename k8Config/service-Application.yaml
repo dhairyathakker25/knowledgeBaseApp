@@ -7,9 +7,8 @@ spec:
     app: knowledgebaseapp
   ports:
     - protocol: "TCP"
-      # Port accessible inside cluster
       port: 8081
-      # Port accessible outside cluster
-      nodePort: 30001
-  type: NodePort
+      # Port accessible inside cluster
+      targetPort: 8081
+  type: ClusterIP  #need to change to cluster ip
 

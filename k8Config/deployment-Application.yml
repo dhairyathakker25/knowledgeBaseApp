@@ -3,6 +3,7 @@ kind: Deployment
 metadata:
   name: knowledgebasedeployment
 spec:
+  replicas: 1
   selector:
     matchLabels:
       app: knowledgebaseapp
