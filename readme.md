@@ -24,12 +24,11 @@ At present there are no set of tests running against it but they are all in TODO
 
 **Still To Come**
 
-1. K8's Integration
-2. Unit Tests using Junit and Mockito
-3. Functional/Integration test
-4. Performance Test using Gatling
-5. Liquibase
-6. deploy to K'8 cluster on EKS.
+1. Unit Tests using Junit and Mockito
+2. Functional/Integration test
+3. Performance Test using Gatling
+4. Liquibase
+5. deploy to K'8 cluster on EKS.
 
 **Author**
 
