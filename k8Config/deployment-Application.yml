@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: knowledgebaseapp
-          image: dhairya25/knowledgebasedemo:latest
+          image: dhairya25/knowledgebasedemo-kube:latest
           imagePullPolicy: Always
           env:   # Setting Enviornmental Variables
             - name: DB_HOST   # Setting Database host address from configMap
