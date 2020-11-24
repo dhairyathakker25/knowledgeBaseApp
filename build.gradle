@@ -2,6 +2,7 @@ plugins {
 	id 'org.springframework.boot' version '2.2.5.RELEASE'
 	id 'io.spring.dependency-management' version '1.0.9.RELEASE'
 	id 'java'
+	id 'scala'
 }
 
 group = 'com.topics'
@@ -16,6 +17,7 @@ configurations {
 	compileOnly {
 		extendsFrom annotationProcessor
 	}
+	gatling
 }
 
 repositories {
@@ -27,6 +29,18 @@ repositories {
 
 springBoot {
 	buildInfo()
+}
+
+sourceSets {
+	simulations {
+		scala {
+			srcDirs = ["src/test/scala"]
+		}
+		resources {
+			srcDirs = ["src/test/resources"]
+		}
+		compileClasspath += configurations.gatling
+	}
 }
 
 dependencies {
@@ -48,4 +62,41 @@ dependencies {
 	testImplementation('org.springframework.boot:spring-boot-starter-test') {
 		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
 	}
+	testImplementation 'org.junit.jupiter:junit-jupiter-api:5.3.1'
+	testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.3.1'
+
+	gatling 'io.gatling.highcharts:gatling-charts-highcharts:2.3.0'
+	gatling 'org.scala-lang:scala-library:2.12.4'
 }
+
+configurations.all {
+	resolutionStrategy {
+		eachDependency { DependencyResolveDetails details ->
+			if (details.requested.group == 'io.netty') {
+				details.useVersion "4.0.51.Final"
+			}
+		}
+	}
+}
+
+
+test {
+	useJUnitPlatform()
+}
+
+task gatlingRun(type: JavaExec) {
+	description ='run perf tests'
+	new File("${buildDir}/reports/gatling").mkdirs()
+
+	classpath = sourceSets.simulations.runtimeClasspath +configurations.gatling
+	main = "io.gatling.app.Gatling"
+
+	args = [
+			'-sf', 'simulations/resources',
+			'-df', 'simulations/resources',
+			'-s', 'gatling.simulation.FirstLoadTest',
+			'-rf', "${project.buildDir}" + '/reports/gatling'
+	]
+
+}
+
