@@ -94,7 +94,7 @@ task gatlingRun(type: JavaExec) {
 	args = [
 			'-sf', 'simulations/resources',
 			'-df', 'simulations/resources',
-			'-s', 'gatling.simulation.FirstLoadTest',
+			'-s', 'gatling.simulation.SecondLoadTest',
 			'-rf', "${project.buildDir}" + '/reports/gatling'
 	]
 
