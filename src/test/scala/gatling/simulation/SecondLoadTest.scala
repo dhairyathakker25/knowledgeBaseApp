@@ -12,8 +12,8 @@ class SecondLoadTest extends Simulation {
 
   val scn = scenario("my second load test")
       .exec(GetTopics.getTopics).pause(5)
-
-    .exec(GetTopics.specificTopic).pause(10,15)
+      .exec(GetTopics.specificGetTopic).pause(10,15)
+      .exec(GetTopics.getTopicById("1"))
 
 
   setUp(
