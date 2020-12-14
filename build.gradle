@@ -86,6 +86,10 @@ test {
 
 task gatlingRun(type: JavaExec) {
 	description ='run perf tests'
+
+	if (project.hasProperty('users')) {
+		environment users: project.property('users')
+	}
 	new File("${buildDir}/reports/gatling").mkdirs()
 
 	classpath = sourceSets.simulations.runtimeClasspath +configurations.gatling

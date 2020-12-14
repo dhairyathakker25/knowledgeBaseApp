@@ -20,13 +20,16 @@ and terminated using docker-compose down
 
 **Tests**
 
+**Performance Tests**
+perf tests using gatling can be run using 
+./gradlew gatlingRun -Dusers=<no of users to be injected>
+
 At present there are no set of tests running against it but they are all in TODO
 
 **Still To Come**
 
 1. Unit Tests using Junit and Mockito
 2. Functional/Integration test
-3. Performance Test using Gatling
 4. Liquibase
 5. deploy to K'8 cluster on EKS.
 
